@@ -94,7 +94,14 @@ def send_song(song: dict) -> int:
     say(f"🎵 <b>{e(song['title'])}</b>  ({e(song.get('language_name') or song['language'])}, "
         f"{song['mood']})\n📌 Inspired by: {e(ref['title'])} - {e(ref['artist'])}\n"
         f"✨ {e(song.get('vibe', ''))}\n🆔 <code>{song['id']}</code>")
-    say(f"🎨 <b>Style</b> (paste in Suno → Style of Music)\n<pre>{e(song['style'])}</pre>")
+    say(f"🎨 <b>Style</b> (paste in Suno → Style of Music)\n<pre>{e(song['style'])}</pre>\n"
+        f"⚙️ <b>Suno settings</b>\n"
+        f"🎤 Vocal Gender: <b>{e(song.get('vocal_gender', '-'))}</b>\n"
+        f"🌀 Weirdness: <b>{song.get('weirdness', '-')}%</b>\n"
+        f"🎯 Style Influence: <b>{song.get('style_influence', '-')}%</b>\n"
+        f"🎲 Variety: <b>{song.get('variety', '-')}%</b>"
+        + (f"\n🚫 Exclude styles: <code>{e(song['exclude_styles'])}</code>"
+           if song.get("exclude_styles") else ""))
     msg = say(f"📝 <b>Lyrics</b> (paste in Suno → Lyrics)\n<pre>{e(song['lyrics'][:3800])}</pre>\n"
               "➡️ Make it in Suno, download the best version, then <b>reply to this message "
               "with the MP3</b> (or just send it).")

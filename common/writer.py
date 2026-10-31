@@ -14,6 +14,11 @@ FIELDS = """Return ONLY a JSON object with these keys:
 "vibe": one line: what the reference song's feeling is and what you kept,
 "title": the new song title (different from the reference), written in English letters,
 "style": Suno "Style of Music" text, max 180 characters: genre, sub-genre, tempo/BPM, key instruments, vocal type, mood, language. NO artist or song names,
+"vocal_gender": "Male" or "Female" (match the reference singer),
+"weirdness": Suno Weirdness slider 0-100 (about 20-40 for mainstream hits, higher only for experimental songs),
+"style_influence": Suno Style Influence slider 0-100 (about 60-80 to stay close to the style),
+"variety": Suno Variety slider 0-100 (how different the 2 versions should be, about 40-60),
+"exclude_styles": short comma list of styles to avoid in Suno (e.g. "rap, heavy metal"), or "",
 "lyrics": full lyrics written ONLY in English (Latin) letters - for non-English songs use natural romanized spelling as fans type it (e.g. Hindi "Tere bina dil nahi lagta", Tamil "Unnai ninaithu"), never the native script - with Suno tags on their own lines: [Intro] [Verse 1] [Pre-Chorus] [Chorus] [Verse 2] [Bridge] [Outro]. 2-3 minutes of singing, a strong repeated hook in the chorus,
 "yt_title": catchy YouTube title, max 90 characters, no artist names, may mix the song title with a short English hint,
 "yt_description": 3-5 lines about the song and its mood (no lyrics, no hashtags),
@@ -47,6 +52,13 @@ Draft:
     return clean(song, ref)
 
 
+def _pct(value, default: int) -> int:
+    try:
+        return max(0, min(100, int(float(str(value).strip(" %")))))
+    except ValueError:
+        return default
+
+
 def clean(song: dict, ref: dict) -> dict:
     strip = lambda s: re.sub(r"[<>]", "", str(s or "")).strip()
     artist_words = {w.lower() for w in re.findall(r"\w{4,}", ref.get("artist", ""))}
@@ -67,6 +79,11 @@ def clean(song: dict, ref: dict) -> dict:
         "title": strip(song.get("title"))[:80],
         "style": style[:200],
         "lyrics": strip(song.get("lyrics")),
+        "vocal_gender": strip(song.get("vocal_gender")).title() or "Female",
+        "weirdness": _pct(song.get("weirdness"), 30),
+        "style_influence": _pct(song.get("style_influence"), 70),
+        "variety": _pct(song.get("variety"), 50),
+        "exclude_styles": strip(song.get("exclude_styles"))[:100],
         "yt_title": strip(song.get("yt_title") or song.get("title"))[:95],
         "yt_description": strip(song.get("yt_description")),
         "tags": tags,
