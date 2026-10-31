@@ -24,7 +24,7 @@
    "dance pop"
   ],
   "id": "20261031-183112",
-  "status": "ready",
+  "status": "given",
   "created": "2026-10-31T18:31:12+00:00",
   "ref": {
    "key": "nicole kidman",
@@ -38,6 +38,8 @@
     "Deezer #13",
     "Spotify global #3"
    ]
-  }
+  },
+  "given": "2026-10-31T18:31:16+00:00",
+  "message_id": 12
  }
 ]
