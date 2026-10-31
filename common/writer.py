@@ -35,12 +35,22 @@ Use what you know about it (language, genre, mood, theme, story, hook style, rhy
 structure, tempo, energy). Write a NEW ORIGINAL song in the SAME language (lyrics written in English letters) with the same feeling,
 so it fits on the same playlist - but with completely different words, title and story details.
 Never reuse any line, phrase or hook of the reference. Never name any artist.
+
+The lyrics must be MEANINGFUL, like a song people quote and remember:
+- one clear story or emotion from start to end; every verse moves it forward
+- real, specific images and moments (a place, a habit, a small detail), not generic filler
+- no random rhyming words, no empty lines like "oh baby yeah" repeated for length
+- the chorus says the heart of the song in a simple, memorable way
+- the bridge adds a new angle (a realisation, a memory, a turn) instead of repeating
+- natural phrasing a native speaker would actually say or sing
 If you don't know the song, infer its feeling from its title, tags and the charts it is on.
 
 {FIELDS}""")
 
     final = ask_json(f"""You are a strict music producer. Score this song draft 1-10 for hook strength,
-catchiness, emotion, rhyme and flow, singability and how well it matches the trend's feeling.
+catchiness, emotion, MEANING (clear story, specific images, every line earns its place),
+rhyme and flow, singability and how well it matches the trend's feeling. Replace every weak,
+generic or filler line with one that means something.
 Then rewrite it to score 9+: stronger chorus hook, tighter rhymes, natural phrasing for native
 speakers of its language. Keep it original (nothing copied from the reference "{ref.get('title')}").
 
