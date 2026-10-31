@@ -12,9 +12,9 @@ FIELDS = """Return ONLY a JSON object with these keys:
 "language_name": e.g. "Tamil",
 "mood": exactly one of "sad", "energetic", "happy" (romantic/calm/devotional count as "happy"; party/hype/race/angry as "energetic"),
 "vibe": one line: what the reference song's feeling is and what you kept,
-"title": the new song title (different from the reference),
+"title": the new song title (different from the reference), written in English letters,
 "style": Suno "Style of Music" text, max 180 characters: genre, sub-genre, tempo/BPM, key instruments, vocal type, mood, language. NO artist or song names,
-"lyrics": full lyrics in the song's own script with Suno tags on their own lines: [Intro] [Verse 1] [Pre-Chorus] [Chorus] [Verse 2] [Bridge] [Outro]. 2-3 minutes of singing, a strong repeated hook in the chorus,
+"lyrics": full lyrics written ONLY in English (Latin) letters - for non-English songs use natural romanized spelling as fans type it (e.g. Hindi "Tere bina dil nahi lagta", Tamil "Unnai ninaithu"), never the native script - with Suno tags on their own lines: [Intro] [Verse 1] [Pre-Chorus] [Chorus] [Verse 2] [Bridge] [Outro]. 2-3 minutes of singing, a strong repeated hook in the chorus,
 "yt_title": catchy YouTube title, max 90 characters, no artist names, may mix the song title with a short English hint,
 "yt_description": 3-5 lines about the song and its mood (no lyrics, no hashtags),
 "tags": 12 YouTube search tags (language, genre, mood, "ai music" ...), no artist names"""
@@ -27,7 +27,7 @@ def write_song(ref: dict) -> dict:
 {ref_text}
 
 Use what you know about it (language, genre, mood, theme, story, hook style, rhyme pattern,
-structure, tempo, energy). Write a NEW ORIGINAL song in the SAME language with the same feeling,
+structure, tempo, energy). Write a NEW ORIGINAL song in the SAME language (lyrics written in English letters) with the same feeling,
 so it fits on the same playlist - but with completely different words, title and story details.
 Never reuse any line, phrase or hook of the reference. Never name any artist.
 If you don't know the song, infer its feeling from its title, tags and the charts it is on.

@@ -28,7 +28,8 @@ WORK = ROOT / "work"
 W, H, FPS = 1280, 720, 30
 CHANNEL = os.getenv("CHANNEL_NAME") or "GetYr_music"
 IST = dt.timezone(dt.timedelta(hours=5, minutes=30))
-FONT = os.getenv("LYRICS_FONT") or "Noto Sans"
+FONT = os.getenv("LYRICS_FONT") or "Bebas Neue"
+FONTS_DIR = ASSETS / "fonts"
 
 
 def run(*args):
@@ -126,10 +127,10 @@ WrapStyle: 0
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Lyric,{FONT},58,&H0000D7FF,&H00FFFFFF,&H00000000,&H96000000,1,0,0,0,100,100,0,0,1,3,2,5,80,80,40,1
-Style: Next,{FONT},38,&H80FFFFFF,&H80FFFFFF,&H00000000,&H96000000,0,0,0,0,100,100,0,0,1,2,1,5,80,80,40,1
-Style: Thumb,{FONT},92,&H00FFFFFF,&H00FFFFFF,&H00000000,&H96000000,1,0,0,0,100,100,0,0,1,6,4,5,60,60,40,1
-Style: Small,{FONT},40,&H0000D7FF,&H0000D7FF,&H00000000,&H96000000,1,0,0,0,100,100,0,0,1,3,2,2,60,60,50,1
+Style: Glow,{FONT},96,&H40FFFFFF,&HFFFFFFFF,&H60FFFFFF,&HFF000000,0,0,0,0,100,100,2,0,1,6,0,5,90,90,40,1
+Style: Lyric,{FONT},96,&H00FFFFFF,&HFFFFFFFF,&H00FFFFFF,&HFF000000,0,0,0,0,100,100,2,0,1,0,0,5,90,90,40,1
+Style: ThumbGlow,{FONT},150,&H40FFFFFF,&H40FFFFFF,&H50FFFFFF,&HFF000000,0,0,0,0,100,100,3,0,1,8,0,5,60,60,40,1
+Style: Thumb,{FONT},150,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&HFF000000,0,0,0,0,100,100,3,0,1,0,0,5,60,60,40,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -137,27 +138,27 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
 
 def write_ass(timed: list[dict], path: Path, length: float) -> None:
-    """Current line in the centre with a karaoke highlight; the next line small below it."""
+    """One line at a time in the centre, white and uppercase. Each word appears when it is sung,
+    with a soft white glow behind it (a blurred copy on a lower layer)."""
     events = []
     for i, line in enumerate(timed):
-        start = line["start"] - 0.25
-        nxt = timed[i + 1]["start"] - 0.25 if i + 1 < len(timed) else length
-        end = min(nxt, line["end"] + 3.0)
+        start = line["start"] - 0.2
+        nxt = timed[i + 1]["start"] - 0.2 if i + 1 < len(timed) else length
+        end = min(nxt, line["end"] + 2.5)
         if line["words"]:
             parts, t = [], start
             for word, ws, we in line["words"]:
-                parts.append(f"{{\\kf{max(1, round((ws - t) * 100))}}}")  # wait before the word
-                parts.append(f"{{\\kf{max(1, round((we - ws) * 100))}}}{ass_escape(word)}")
-                t = we
+                # \ko: the word (fill and glow) stays hidden until it is sung, then appears.
+                # (libass shows a syllable when its time is over, so the wait sits before it)
+                parts.append(f"{{\\ko{max(1, round((ws - t) * 100))}}}")
+                parts.append(f"{{\\ko1}}{ass_escape(word.upper())}")
+                t = ws + 0.01
             text = "".join(parts)
         else:
-            text = ass_escape(line["text"])
-        events.append(f"Dialogue: 1,{ass_time(start)},{ass_time(end)},Lyric,,0,0,0,,"
-                      f"{{\\fad(150,150)}}{text}")
-        if i + 1 < len(timed):
-            events.append(f"Dialogue: 0,{ass_time(start)},{ass_time(end)},Next,,0,0,0,,"
-                          f"{{\\pos({W // 2},{H // 2 + 95})\\fad(150,150)}}"
-                          f"{ass_escape(timed[i + 1]['text'])}")
+            text = ass_escape(line["text"].upper())
+        for layer, style, tags in ((0, "Glow", "\\blur14"), (1, "Lyric", "\\blur0.6")):
+            events.append(f"Dialogue: {layer},{ass_time(start)},{ass_time(end)},{style},,0,0,0,,"
+                          f"{{\\fad(200,250){tags}}}{text}")
     path.write_text(ASS_HEAD + "\n".join(events) + "\n", encoding="utf-8")
 
 
@@ -181,7 +182,7 @@ def render(audio: Path, ass: Path, background: Path, out: Path, length: float) -
     main = WORK / "main.mp4"
     ass_path = str(ass).replace(":", r"\:")
     run("ffmpeg", "-y", "-stream_loop", "-1", "-i", loop, "-i", audio, "-filter_complex",
-        f"[0:v]eq=brightness=-0.05,ass='{ass_path}'[v];"
+        f"[0:v]ass='{ass_path}':fontsdir='{FONTS_DIR}'[v];"
         "[1:a]loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000,aformat=channel_layouts=stereo[a]",
         "-map", "[v]", "-map", "[a]", "-t", f"{length:.2f}", "-c:v", "libx264", "-preset",
         "veryfast", "-crf", "21", "-r", str(FPS), "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a",
@@ -206,13 +207,14 @@ def render(audio: Path, ass: Path, background: Path, out: Path, length: float) -
 def thumbnail(background: Path, title: str, out: Path) -> None:
     ass = WORK / "thumb.ass"
     ass.write_text(ASS_HEAD +
-                   f"Dialogue: 0,0:00:00.00,0:00:10.00,Thumb,,0,0,0,,{ass_escape(title)}\n"
-                   f"Dialogue: 0,0:00:00.00,0:00:10.00,Small,,0,0,0,,{ass_escape(CHANNEL)}\n",
+                   f"Dialogue: 0,0:00:00.00,0:00:10.00,ThumbGlow,,0,0,0,,{{\\blur16}}"
+                   f"{ass_escape(title.upper())}\n"
+                   f"Dialogue: 1,0:00:00.00,0:00:10.00,Thumb,,0,0,0,,{ass_escape(title.upper())}\n",
                    encoding="utf-8")
     ass_path = str(ass).replace(":", r"\:")
     run("ffmpeg", "-y", "-ss", "1", "-i", background, "-vf",
         f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},"
-        f"eq=brightness=-0.15,ass='{ass_path}'", "-frames:v", "1", "-q:v", "3", out)
+        f"ass='{ass_path}':fontsdir='{FONTS_DIR}'", "-frames:v", "1", "-q:v", "3", out)
 
 
 # ---------- schedule + upload ----------
