@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: getyr-music-bot
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements-bot.txt
+    startCommand: gunicorn -w 1 --threads 4 -t 300 -b 0.0.0.0:$PORT bot.app:app
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_USER_ID
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: NVIDIA_API_KEY
+        sync: false
+      - key: YT_API_KEY
+        sync: false
+      - key: LASTFM_API_KEY
+        sync: false
+      - key: GH_DISPATCH_TOKEN
+        sync: false
+      - key: GH_REPO
+        value: sharath11yr/gptk750m
