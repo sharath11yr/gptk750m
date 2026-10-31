@@ -128,6 +128,8 @@ def cmd_audio(msg: dict):
         say("⚠️ That file is over 20 MB (Telegram's limit for bots). Send the MP3 version.")
         return
     reply_id = (msg.get("reply_to_message") or {}).get("message_id")
+    caption = (msg.get("caption") or "").strip()
+    own = caption.lower().startswith("own")
     month = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m")
     result = {}
 
@@ -135,22 +137,28 @@ def cmd_audio(msg: dict):
         target = None
         if reply_id:
             target = next((s for s in data if s.get("message_id") == reply_id), None)
-        if not target:
+        if not target and not own:
             waiting = [s for s in data if s["status"] == "given" and not s.get("audio_file_id")]
             target = waiting[-1] if waiting else None
-        if target:
-            target.update(audio_file_id=f["file_id"], audio_at=now(), status="has_audio")
-            result["song"] = target
-        result["used"] = sum(1 for s in data if s.get("audio_at", "").startswith(month))
+        if not target:
+            # Your own song: the video job listens to it to find the lyrics, mood and title.
+            target = {"id": dt.datetime.now().strftime("%Y%m%d-%H%M%S"), "own": True,
+                      "title_hint": caption[3:].strip(" :-") if own else caption,
+                      "title": caption[3:].strip(" :-") if own else (caption or "your song"),
+                      "created": now(), "ref": {"key": "own-" + f["file_id"][-12:]}}
+            data.append(target)
+        target.update(audio_file_id=f["file_id"], audio_at=now(), status="has_audio")
+        result["song"] = target
+        result["used"] = sum(1 for s in data if s.get("audio_at", "").startswith(month)
+                             and not s.get("own"))
     with lock:
         ghstore.update(SONGS, [], attach, "Song audio received")
-    song = result.get("song")
-    if not song:
-        say("I don't have a song waiting for audio. Send /song first.")
-        return
+    song = result["song"]
     left = MONTHLY_DOWNLOADS - result["used"]
-    say(f"✅ Song received for <b>{html.escape(song['title'])}</b>.\nSend /video to make and "
-        f"upload it.\n📥 Suno downloads this month: {result['used']}/{MONTHLY_DOWNLOADS}"
+    kind = ("🎧 Your own song - I'll work out the lyrics, mood and title myself."
+            if song.get("own") else f"✅ Song received for <b>{html.escape(song['title'])}</b>.")
+    say(f"{kind}\nSend /video to make and upload it.\n"
+        f"📥 Suno downloads this month (bot songs): {result['used']}/{MONTHLY_DOWNLOADS}"
         + ("\n⚠️ Only {} left this month!".format(left) if left <= 3 else ""))
 
 
@@ -197,7 +205,8 @@ def cmd_status():
 
 
 HELP = ("/song - get the next song (title, style, lyrics)\n"
-        "send the MP3 - attach it to the song\n"
+        "send the MP3 - attach it to the song (reply to the lyrics message)\n"
+        "send an MP3 with caption <code>own</code> (or <code>own: Title</code>) - your own song\n"
         "/video - make the video and upload it to YouTube\n"
         "/trends - see what's trending\n/status - counts")
 

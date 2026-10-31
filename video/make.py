@@ -110,6 +110,49 @@ def align(audio: Path, lines: list[str], language: str, length: float) -> list[d
                  "words": []} for i, l in enumerate(lines)]
 
 
+def analyze_own(audio: Path, song: dict) -> list[dict]:
+    """Own song (no script from the bot): transcribe it, then let the AI choose the mood
+    (background), title and YouTube text and write the lyrics in English letters."""
+    import stable_whisper
+    from common.llm import ask_json
+    from common.writer import clean
+    model = stable_whisper.load_model(os.getenv("WHISPER_MODEL", "small"))
+    result = model.transcribe(str(audio))
+    segs = [(s.text.strip(), float(s.start), float(s.end)) for s in result.segments
+            if s.text.strip()]
+    numbered = "\n".join(f"{i + 1}. {t}" for i, (t, _, _) in enumerate(segs)) or "(instrumental)"
+    info = ask_json(f"""This is the transcript of a song (language detected: {result.language}),
+one numbered line per sung phrase. Title hint from the owner: "{song.get('title_hint', '')}".
+
+{numbered}
+
+Return ONLY JSON with keys:
+"mood": exactly one of "sad", "energetic", "happy" (romantic/calm/devotional = happy; party/hype/race/angry = energetic),
+"language": ISO 639-1 code, "language_name": e.g. "Tamil",
+"title": song title in English letters (use the hint if given),
+"yt_title": catchy YouTube title, max 90 characters,
+"yt_description": 3-5 lines about the song and its mood,
+"tags": 12 YouTube search tags,
+"lines": the SAME number of lines as above, in the same order, each corrected for obvious
+transcription mistakes and written in English letters (romanized as fans type it).""")
+    lines = [str(l).strip() for l in info.get("lines", [])]
+    if len(lines) != len(segs):
+        lines = [t for t, _, _ in segs]
+    song.update(clean({**info, "lyrics": "\n".join(lines)}, {"artist": ""}))
+    if song.get("title_hint"):
+        song["title"] = song["title_hint"]
+    timed = []
+    for line, (_, start, end) in zip(lines, segs):
+        words = line.split()
+        if not words:
+            continue
+        step = (end - start) / len(words)
+        timed.append({"text": line, "start": start, "end": end,
+                      "words": [(" " + w, start + i * step, start + (i + 1) * step)
+                                for i, w in enumerate(words)]})
+    return timed
+
+
 def ass_time(t: float) -> str:
     t = max(0.0, t)
     return f"{int(t // 3600)}:{int(t % 3600 // 60):02d}:{t % 60:05.2f}"
@@ -235,11 +278,11 @@ def next_slot(taken: list[str]) -> dt.datetime:
 
 
 def description(song: dict) -> str:
-    lyrics = "\n".join(sung_lines(song["lyrics"]))
+    lyrics = "\n".join(sung_lines(song.get("lyrics", "")))
     tags = " ".join("#" + re.sub(r"\W", "", t) for t in song["tags"][:3] if re.sub(r"\W", "", t))
     return (f"{song['yt_description']}\n\n🎵 {song['title']} | {CHANNEL}\n\n"
             f"Lyrics:\n{lyrics}\n\n"
-            "This song was created with AI (music made with Suno). Original lyrics and music.\n"
+            "This song was created with AI (music made with Suno).\n"
             f"Subscribe to {CHANNEL} for new songs every day!\n\n{tags} #aimusic")[:4900]
 
 
@@ -257,7 +300,10 @@ def main() -> None:
 
     audio = download_audio(song["audio_file_id"], WORK / "song.mp3")
     length = duration(audio)
-    timed = align(audio, sung_lines(song["lyrics"]), song["language"], length)
+    if song.get("own"):
+        timed = analyze_own(audio, song)
+    else:
+        timed = align(audio, sung_lines(song["lyrics"]), song["language"], length)
     ass = WORK / "lyrics.ass"
     write_ass(timed, ass, length)
     background = pick_background(song["mood"])
