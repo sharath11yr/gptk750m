@@ -11,7 +11,9 @@ import html
 import logging
 import os
 import re
+import sys
 import threading
+import traceback
 import time
 
 import requests
@@ -260,9 +262,6 @@ def handle(update: dict):
     cmd, _, arg = text.partition(" ")
     cmd = cmd.split("@")[0].lower()
     try:
-        if text.startswith("/"):
-            tg("sendChatAction", chat_id=OWNER, action="typing")
-            say("⏳")
         if msg.get("audio") or msg.get("document") or msg.get("voice"):
             cmd_audio(msg)
         elif cmd in ("/song", "/songs"):
@@ -282,13 +281,35 @@ def handle(update: dict):
 
 @app.post(HOOK_PATH)
 def hook():
-    threading.Thread(target=handle, args=(request.get_json(force=True),), daemon=True).start()
+    update = request.get_json(force=True)
+    threading.Thread(target=handle, args=(update,), daemon=True, name="handle").start()
+    msg = update.get("message") or {}
+    if (msg.get("from") or {}).get("id") == OWNER and (msg.get("text") or "").startswith("/"):
+        # Reply inside the webhook answer itself: needs no outgoing connection from this server.
+        return {"method": "sendMessage", "chat_id": OWNER, "text": "⏳"}
     return "ok"
 
 
 @app.get("/debug")
 def debug():
-    return "<pre>" + html.escape("\n".join(RECENT) or "no log lines yet") + "</pre>"
+    stacks = []
+    for t in threading.enumerate():
+        if t.name.startswith("handle"):
+            frame = sys._current_frames().get(t.ident)
+            stacks.append("--- stuck task ---\n" + "".join(traceback.format_stack(frame)[-6:]))
+    text = "\n".join(RECENT) + "\n\n" + ("\n".join(stacks) or "no tasks running")
+    return "<pre>" + html.escape(re.sub(r"(key=|bot)[A-Za-z0-9_:\-]{20,}", r"\1***", text)) + "</pre>"
+
+
+@app.get("/ping-telegram")
+def ping_telegram():
+    """Open in a browser: tests this server's own connection to Telegram."""
+    started = time.time()
+    try:
+        r = requests.get(f"{TG}/getMe", timeout=(10, 20))
+        return f"Telegram answered HTTP {r.status_code} in {time.time() - started:.1f}s"
+    except Exception as exc:
+        return f"FAILED after {time.time() - started:.1f}s: {type(exc).__name__}"
 
 
 @app.get("/")
