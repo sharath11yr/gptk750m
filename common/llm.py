@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import re
+import time
 
 import requests
 import urllib3.util.connection as _conn
@@ -14,14 +15,14 @@ log = logging.getLogger(__name__)
 
 GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta"
 NVIDIA_URL = "https://integrate.api.nvidia.com/v1"
-NVIDIA_MODELS = [
-    "deepseek-ai/deepseek-v3.2",
-    "deepseek-ai/deepseek-v3.1",
-    "qwen/qwen3-235b-a22b",
-    "moonshotai/kimi-k2-instruct",
-    "meta/llama-4-maverick-17b-128e-instruct",
-    "meta/llama-3.3-70b-instruct",
+NVIDIA_PREFERRED = [
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "deepseek-ai/deepseek-v4.1-flash",
+    "deepseek-ai/deepseek-v4.1",
+    "qwen/qwen3.5-397b-a17b",
+    "openai/gpt-oss-120b",
 ]
+_nvidia_models: list[str] | None = None
 
 _gemini_models: list[str] | None = None
 
@@ -49,7 +50,9 @@ def _list_gemini() -> list[str]:
                      and ("flash" in n or "pro" in n)]
             # Prefer the newest version; within a version prefer flash (fast, generous free tier).
             names.sort(key=lambda n: (_version(n), "flash" in n, "latest" not in n), reverse=True)
-            _gemini_models = names[:4] or ["gemini-2.5-flash"]
+            flash = [n for n in names if "flash" in n]
+            pro = [n for n in names if "pro" in n]
+            _gemini_models = (flash[:4] + pro[:1]) or ["gemini-2.5-flash"]
         except Exception as exc:
             log.warning("Could not list Gemini models: %s", exc)
             _gemini_models = ["gemini-2.5-flash", "gemini-2.0-flash"]
@@ -75,14 +78,37 @@ def _gemini(prompt: str) -> str:
     raise RuntimeError(f"All Gemini models failed: {last}")
 
 
+def _list_nvidia(headers: dict) -> list[str]:
+    """Chat models this key can use right now: preferred ones first, then any other big chat model."""
+    global _nvidia_models
+    if _nvidia_models is None:
+        if forced := os.getenv("NVIDIA_MODEL"):
+            _nvidia_models = [forced]
+            return _nvidia_models
+        try:
+            r = requests.get(f"{NVIDIA_URL}/models", headers=headers, timeout=30)
+            r.raise_for_status()
+            available = [m["id"] for m in r.json().get("data", [])]
+        except Exception as exc:
+            log.warning("Could not list NVIDIA models: %s", exc)
+            available = []
+        bad = ("embed", "rerank", "guard", "reward", "vision", "vl", "safety", "parse", "coder",
+               "clip", "tts", "asr", "translate")
+        others = [m for m in available if not any(b in m.lower() for b in bad)
+                  and re.search(r"deepseek|qwen|llama|nemotron|mistral|gpt-oss|kimi|glm", m)]
+        _nvidia_models = ([m for m in NVIDIA_PREFERRED if m in available] +
+                          [m for m in reversed(others) if m not in NVIDIA_PREFERRED][:6]
+                          or NVIDIA_PREFERRED)
+    return _nvidia_models
+
+
 def _nvidia(prompt: str) -> str:
     headers = {"Authorization": f"Bearer {os.environ['NVIDIA_API_KEY']}"}
-    models = [os.environ["NVIDIA_MODEL"]] if os.getenv("NVIDIA_MODEL") else NVIDIA_MODELS
     last = None
-    for model in models:
+    for model in _list_nvidia(headers):
         try:
             r = requests.post(f"{NVIDIA_URL}/chat/completions", headers=headers, timeout=300,
-                              json={"model": model, "temperature": 0.9, "max_tokens": 4096,
+                              json={"model": model, "temperature": 0.9, "max_tokens": 6000,
                                     "messages": [{"role": "user", "content": prompt}]})
             if r.status_code >= 400:
                 raise RuntimeError(f"{model}: HTTP {r.status_code} {r.text[:200]}")
@@ -102,14 +128,17 @@ def _parse(text: str) -> dict:
 
 
 def ask_json(prompt: str) -> dict:
-    """Ask for a JSON object. Gemini first, then NVIDIA."""
+    """Ask for a JSON object. Gemini first, then NVIDIA; if both are busy, wait and try again."""
     errors = []
-    for name, fn in (("gemini", _gemini), ("nvidia", _nvidia)):
-        if not os.getenv(f"{name.upper()}_API_KEY"):
-            continue
-        for _ in range(2):
+    for wait in (0, 30, 90):
+        if wait:
+            log.info("All AI models busy; waiting %ds and trying again", wait)
+            time.sleep(wait)
+        for name, fn in (("gemini", _gemini), ("nvidia", _nvidia)):
+            if not os.getenv(f"{name.upper()}_API_KEY"):
+                continue
             try:
                 return _parse(fn(prompt))
             except Exception as exc:
-                errors.append(f"{name}: {exc}")
-    raise RuntimeError("LLM failed: " + " | ".join(errors[-3:]))
+                errors.append(f"{name}: {str(exc)[:300]}")
+    raise RuntimeError("LLM failed: " + " | ".join(errors[-2:]))

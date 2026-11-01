@@ -121,7 +121,8 @@ def analyze_own(audio: Path, song: dict) -> list[dict]:
     segs = [(s.text.strip(), float(s.start), float(s.end)) for s in result.segments
             if s.text.strip()]
     numbered = "\n".join(f"{i + 1}. {t}" for i, (t, _, _) in enumerate(segs)) or "(instrumental)"
-    info = ask_json(f"""This is the transcript of a song (language detected: {result.language}),
+    try:
+        info = ask_json(f"""This is the transcript of a song (language detected: {result.language}),
 one numbered line per sung phrase. Title hint from the owner: "{song.get('title_hint', '')}".
 
 {numbered}
@@ -135,6 +136,11 @@ Return ONLY JSON with keys:
 "tags": 12 YouTube search tags,
 "lines": the SAME number of lines as above, in the same order, each corrected for obvious
 transcription mistakes and written in English letters (romanized as fans type it).""")
+    except Exception as exc:
+        # No AI available: still make the video with the raw transcript and a default look.
+        log.warning("AI unavailable for own song (%s); using the transcript as is", exc)
+        info = {"mood": "happy", "language": result.language or "en",
+                "title": song.get("title_hint") or "New Song", "tags": ["music", "song"]}
     lines = [str(l).strip() for l in info.get("lines", [])]
     if len(lines) != len(segs):
         lines = [t for t, _, _ in segs]
