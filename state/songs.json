@@ -44,5 +44,52 @@
   "audio_file_id": "CQACAgUAAxkBAAMYaubZEiOCBozR2SKaxaTuNiaUxLUAAs0jAAJsCTFX42YG0BtZQoQ9BA",
   "audio_at": "2026-11-01T06:15:46+00:00",
   "render_at": "2026-11-01T06:15:58+00:00"
+ },
+ {
+  "language": "en",
+  "language_name": "English",
+  "mood": "energetic",
+  "vibe": "Glossy dark dance-pop with punchy rhythmic hooks, sub-bass driven tempo, and high-intensity breakup independence.",
+  "title": "Trophy Driver",
+  "style": "Modern dark dance-pop, glossy synth-pop, 125 BPM, heavy sub-bass, slick rhythmic female vocals, club beat, energetic, English",
+  "lyrics": "[Intro]\n(Engine revving rhythmically)\n(Slick sub-bass drop)\nYeah\nLeft-lane mindset\nWatch me switch it\n\n[Verse 1]\nLeft your Cartier ring on the dashboard leather\nTook your spare ignition keys, never felt better\n3 AM green lights hit the windscreen glass\nYou were talking future, I was stepping on the gas\nBought me silk dresses just to keep me quiet\nNow I'm blowing through the toll and I'm starting a riot\n\n[Pre-Chorus]\nUsed to sit pretty in the passenger seat\nNodding along to your high-class beat\nDid you really think I'd stay fixed in your frame?\nWatch me burn your name\n\n[Chorus]\n'Cause I'm the trophy driver, redlining fast\nBlowing past the memory, burning up the past\nYou wanted a showpiece, locked in your grip\nNow I'm taking the wheel and I'm flipping the script\nYeah, trophy driver, dust in your eyes\nNever looking back at your polished little lies\n\n[Verse 2]\nLip gloss shine in the rear-view reflection\nDoing one-twenty in a brand new direction\nFive missed calls on the black screen glowing\nI put it on silent, keeping it rolling\nNo backseat boss gonna check my speed\nI got the title and the key I need\n\n[Pre-Chorus]\nUsed to sit pretty in the passenger seat\nNodding along to your high-class beat\nDid you really think I'd stay fixed in your frame?\nWatch me burn your name\n\n[Chorus]\n'Cause I'm the trophy driver, redlining fast\nBlowing past the memory, burning up the past\nYou wanted a showpiece, locked in your grip\nNow I'm taking the wheel and I'm flipping the script\nYeah, trophy driver, dust in your eyes\nNever looking back at your polished little lies\n\n[Bridge]\n(Bass drops to heavy sub pulse)\nI wasn't born to sit beside your pride\nI was born to take control and ride\nKeep the valet parking, keep the pedestal throne\nI'm driving this highway all on my own\n\n[Chorus]\n'Cause I'm the trophy driver, redlining fast\nBlowing past the memory, burning up the past\nYou wanted a showpiece, locked in your grip\nNow I'm taking the wheel and I'm flipping the script\nYeah, trophy driver, dust in your eyes\nNever looking back at your polished little lies\n\n[Outro]\n(Slick electro beat fades with engine roar)\nTrophy driver\nRedline, redline\nLeaving you behind\n(Engine revs off)",
+  "vocal_gender": "Female",
+  "weirdness": 25,
+  "style_influence": 75,
+  "variety": 50,
+  "exclude_styles": "country, acoustic folk, heavy metal, opera",
+  "yt_title": "Trophy Driver (Lyric Video) - High Energy Dance Pop Anthem",
+  "yt_description": "An explosive high-energy dance-pop track about taking the wheel and taking control.\nDriven by dark synth sub-bass, slick rhythmic vocals, and unapologetic breakup attitude.\nPerfect for late-night drives, workout playlists, and high-energy pop vibes.",
+  "tags": [
+   "dance pop",
+   "pop music",
+   "energetic pop",
+   "female pop vocals",
+   "synthpop",
+   "breakup anthem",
+   "driving playlist",
+   "ai music",
+   "new pop 2025",
+   "dark pop",
+   "club hits",
+   "english pop song"
+  ],
+  "id": "20261101-064441",
+  "status": "ready",
+  "created": "2026-11-01T06:44:41+00:00",
+  "ref": {
+   "key": "housewife",
+   "title": "Tate McRae - Housewife (Official Video)",
+   "artist": "TateMcRaeVEVO",
+   "sources": [
+    "YouTube US #14",
+    "YouTube GB #6",
+    "Last.fm global #5",
+    "Apple Music US #6",
+    "Apple Music GB #4",
+    "Apple Music BR #2",
+    "Spotify global #1"
+   ]
+  }
  }
 ]
