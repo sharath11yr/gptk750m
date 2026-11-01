@@ -20,5 +20,7 @@ services:
         sync: false
       - key: GH_DISPATCH_TOKEN
         sync: false
+      - key: PYTHON_VERSION
+        value: 3.12.7
       - key: GH_REPO
         value: sharath11yr/gptk750m

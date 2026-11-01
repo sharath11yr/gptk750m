@@ -5,6 +5,7 @@ Memory lives in the GitHub repo: state/songs.json (written here), state/uploads.
 """
 
 import collections
+import netrc  # noqa: F401  (load now: a lazy import inside requests deadlocked threads on Python 3.14)
 import datetime as dt
 import hashlib
 import html
@@ -17,6 +18,7 @@ import traceback
 import time
 
 import requests
+import requests.utils  # noqa: F401
 import urllib3.util.connection as _conn
 from flask import Flask, request
 
