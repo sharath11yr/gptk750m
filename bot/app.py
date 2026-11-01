@@ -15,7 +15,11 @@ import threading
 import time
 
 import requests
+import urllib3.util.connection as _conn
 from flask import Flask, request
+
+# Render's free servers can hang on IPv6; use IPv4 only.
+_conn.HAS_IPV6 = False
 
 from common import ghstore, trends
 from common.writer import write_song
@@ -51,7 +55,9 @@ _trend_cache: dict = {"at": 0.0, "songs": []}
 
 def tg(method: str, **params):
     try:
-        r = requests.post(f"{TG}/{method}", json=params, timeout=60)
+        started = time.time()
+        r = requests.post(f"{TG}/{method}", json=params, timeout=(10, 60))
+        log.info("Telegram %s: HTTP %s in %.1fs", method, r.status_code, time.time() - started)
     except Exception as exc:
         log.warning("Telegram %s failed: %s", method, exc)
         return None

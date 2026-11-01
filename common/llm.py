@@ -6,6 +6,9 @@ import os
 import re
 
 import requests
+import urllib3.util.connection as _conn
+
+_conn.HAS_IPV6 = False  # IPv4 only (IPv6 can hang on Render)
 
 log = logging.getLogger(__name__)
 

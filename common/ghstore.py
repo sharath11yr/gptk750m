@@ -5,6 +5,9 @@ import json
 import os
 
 import requests
+import urllib3.util.connection as _conn
+
+_conn.HAS_IPV6 = False  # IPv4 only (IPv6 can hang on Render)
 
 API = "https://api.github.com"
 
