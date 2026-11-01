@@ -75,7 +75,7 @@
    "english pop song"
   ],
   "id": "20261101-064441",
-  "status": "given",
+  "status": "has_audio",
   "created": "2026-11-01T06:44:41+00:00",
   "ref": {
    "key": "housewife",
@@ -92,6 +92,8 @@
    ]
   },
   "given": "2026-11-01T06:44:45+00:00",
-  "message_id": 49
+  "message_id": 49,
+  "audio_file_id": "CQACAgUAAxkBAAMyaubklsefqEpAMIziZWxBcg0sNPUAAuEjAAJsCTlXBNFdN1KjR0c9BA",
+  "audio_at": "2026-11-01T07:05:16+00:00"
  }
 ]
