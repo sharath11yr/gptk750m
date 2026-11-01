@@ -4,11 +4,13 @@ Memory lives in the GitHub repo: state/songs.json (written here), state/uploads.
 (written by the video workflow).
 """
 
+import collections
 import datetime as dt
 import hashlib
 import html
 import logging
 import os
+import re
 import threading
 import time
 
@@ -20,6 +22,19 @@ from common.writer import write_song
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("bot")
+RECENT: collections.deque = collections.deque(maxlen=60)  # shown at /debug
+
+
+class _Recent(logging.Handler):
+    def emit(self, record):
+        text = self.format(record)
+        text = re.sub(r"(key=|bot)[A-Za-z0-9_:\-]{20,}", r"\1***", text)
+        RECENT.append(text[:1500])
+
+
+_h = _Recent()
+_h.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
+logging.getLogger().addHandler(_h)
 
 TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 OWNER = int(os.environ["TELEGRAM_USER_ID"])
@@ -35,15 +50,23 @@ _trend_cache: dict = {"at": 0.0, "songs": []}
 
 
 def tg(method: str, **params):
-    r = requests.post(f"{TG}/{method}", json=params, timeout=60)
+    try:
+        r = requests.post(f"{TG}/{method}", json=params, timeout=60)
+    except Exception as exc:
+        log.warning("Telegram %s failed: %s", method, exc)
+        return None
     if not r.ok:
         log.warning("Telegram %s: %s", method, r.text[:300])
+        return None
     return r.json().get("result")
 
 
 def say(text: str, **extra):
-    return tg("sendMessage", chat_id=OWNER, text=text, parse_mode="HTML",
+    sent = tg("sendMessage", chat_id=OWNER, text=text, parse_mode="HTML",
               disable_web_page_preview=True, **extra)
+    if sent is None:  # formatting problem: send it as plain text instead
+        sent = tg("sendMessage", chat_id=OWNER, text=re.sub(r"<[^>]+>", "", html.unescape(text))[:4000])
+    return sent
 
 
 def now() -> str:
@@ -220,12 +243,20 @@ HELP = ("/song - get the next song (title, style, lyrics)\n"
 
 def handle(update: dict):
     msg = update.get("message") or {}
-    if (msg.get("from") or {}).get("id") != OWNER:
+    sender = (msg.get("from") or {}).get("id")
+    log.info("Update from %s: %s", sender, (msg.get("text") or msg.get("caption") or
+                                           ("[audio]" if msg.get("audio") or msg.get("document")
+                                            else "[other]"))[:60])
+    if sender != OWNER:
+        log.warning("Ignored: sender %s is not TELEGRAM_USER_ID %s", sender, OWNER)
         return
     text = (msg.get("text") or "").strip()
     cmd, _, arg = text.partition(" ")
     cmd = cmd.split("@")[0].lower()
     try:
+        if text.startswith("/"):
+            tg("sendChatAction", chat_id=OWNER, action="typing")
+            say("⏳")
         if msg.get("audio") or msg.get("document") or msg.get("voice"):
             cmd_audio(msg)
         elif cmd in ("/song", "/songs"):
@@ -247,6 +278,11 @@ def handle(update: dict):
 def hook():
     threading.Thread(target=handle, args=(request.get_json(force=True),), daemon=True).start()
     return "ok"
+
+
+@app.get("/debug")
+def debug():
+    return "<pre>" + html.escape("\n".join(RECENT) or "no log lines yet") + "</pre>"
 
 
 @app.get("/")
