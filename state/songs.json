@@ -261,5 +261,52 @@
   "audio_file_id": "CQACAgUAAxkBAANxauhAoQRywNKBr92JPOduRZRMIYMAAiEfAAKfykFXeVXR5wpvqGw9BA",
   "audio_at": "2026-11-02T07:50:15+00:00",
   "render_at": "2026-11-02T07:50:52+00:00"
+ },
+ {
+  "language": "en",
+  "language_name": "English",
+  "mood": "energetic",
+  "vibe": "Cyberpunk K-pop electro-pop gaming anthem with explosive bass drops, aggressive female rap flow, and high-octane belting hooks.",
+  "title": "Overclocked",
+  "style": "High-energy electro-pop, K-pop gaming anthem, fast 135 BPM, heavy synth bass, trap hi-hats, sharp aggressive female rap, belting vocals, explosive drop, English",
+  "lyrics": "[Intro]\nPulse in the dark, digital spark\nBreak through the noise, leave a brand new mark\n\n[Verse 1]\nNeon reflections on black tempered glass\nShatter the limit when I step on the gas\nHigh-voltage current running under my skin\nTore down the firewall, let the games begin\nZero latency, cutting through the grid\nBlink and you miss every move that I did\nNo backdown, no off-switch, no safety line\nThe city burns blue, and the throne is mine\n\n[Pre-Chorus]\nSystem redline, pressure at the peak\nI am the weapon that you came to seek\nThree, two, one—detonate!\n\n[Chorus]\nOverclocked! I’m lighting up the wire\nShort-circuit the dark, set the night on fire\nHigher, faster, power in the veins\nTurn the whole grid into my domain\nOverclocked! You can’t stop the surge\nWatch the shadow and the lightning merge!\n\n[Verse 2]\nTry to trace my signal, but I’m ghost in the code\nOverloading systems on a high-speed road\nDiamond-plated cadence, heavy sub-bass drop\nRunning at maximum, we never gonna stop\nYou chase the static, but I am the sound\nShaking up the pavement when I hit the ground\n\n[Pre-Chorus]\nSystem redline, pressure at the peak\nI am the weapon that you came to seek\nThree, two, one—detonate!\n\n[Chorus]\nOverclocked! I’m lighting up the wire\nShort-circuit the dark, set the night on fire\nHigher, faster, power in the veins\nTurn the whole grid into my domain\nOverclocked! You can’t stop the surge\nWatch the shadow and the lightning merge!\n\n[Bridge]\nKill the main power, total black out\nSilence the fear, erase every doubt\nVoltage maxed out, ready for the strike\nNothing in the world hits like this!\n\n[Chorus]\nOverclocked! I’m lighting up the wire\nShort-circuit the dark, set the night on fire\nHigher, faster, power in the veins\nTurn the whole grid into my domain\nOverclocked! You can’t stop the surge\nWatch the shadow and the lightning merge!\n\n[Outro]\nSystem override complete\nOverclocked\nWatch the lightning merge",
+  "vocal_gender": "Female",
+  "weirdness": 25,
+  "style_influence": 80,
+  "variety": 50,
+  "exclude_styles": "acoustic, ballad, country, slow, rock",
+  "yt_title": "Overclocked - Cyberpunk Electro-Pop Gaming Anthem (Official Audio)",
+  "yt_description": "Unleash high-voltage adrenaline with Overclocked, an explosive K-pop style electro-pop anthem.\nPacked with aggressive synth bass, razor-sharp rap flows, and soaring hype choruses.\nBuilt for competitive gaming, intense workouts, and ultimate energy playlists.",
+  "tags": [
+   "english pop",
+   "electro pop",
+   "gaming music",
+   "hype anthem",
+   "energetic pop",
+   "kpop style",
+   "cyberpunk music",
+   "ai music",
+   "electronic dance",
+   "badass music",
+   "workout music",
+   "high energy"
+  ],
+  "id": "20261102-080915",
+  "status": "ready",
+  "created": "2026-11-02T08:09:15+00:00",
+  "ref": {
+   "key": "firestarter",
+   "title": "K/DA - FIRESTARTER ft. MIYEON and SOYEON of i-dle, Sophie Powers, Mimi Webb (Official Music Video)",
+   "artist": "League of Legends",
+   "sources": [
+    "YouTube US #7",
+    "YouTube GB #15",
+    "YouTube KR #11",
+    "YouTube ES #19",
+    "YouTube PH #5",
+    "YouTube FR #12",
+    "YouTube DE #14"
+   ]
+  }
  }
 ]
