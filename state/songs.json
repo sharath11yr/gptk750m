@@ -183,7 +183,7 @@
    "latin dance beat"
   ],
   "id": "20261102-051923",
-  "status": "given",
+  "status": "has_audio",
   "created": "2026-11-02T05:19:23+00:00",
   "ref": {
    "key": "pokito",
@@ -201,6 +201,8 @@
    ]
   },
   "given": "2026-11-02T05:19:27+00:00",
-  "message_id": 100
+  "message_id": 100,
+  "audio_file_id": "CQACAgUAAxkBAANlaugnPxYcvfMvo6v50qb61e8aMEoAAqweAAKfykFXgDMiPLzRAAEMPQQ",
+  "audio_at": "2026-11-02T06:01:58+00:00"
  }
 ]
