@@ -152,5 +152,53 @@
   "audio_at": "2026-11-01T08:27:33+00:00",
   "status": "rendering",
   "render_at": "2026-11-01T08:27:40+00:00"
+ },
+ {
+  "language": "es",
+  "language_name": "Spanish",
+  "mood": "energetic",
+  "vibe": "High-energy global Reggaeton dance anthem with heavy dembow rhythm, sharp urban hooks, and vibrant summer party atmosphere.",
+  "title": "Prende La Calle",
+  "style": "Reggaeton, Latin urban, modern dembow beat, 98 BPM, heavy sub-bass, sharp brass stabs, dynamic male vocal style, high-energy party atmosphere, Spanish",
+  "lyrics": "[Intro]\nOye... dale play a la bocina\nQue retumbe toda la esquina\nPrende la calle, sube el vapor\nQue esto apenas va empezando, pa'\n\n[Verse 1]\nLuces de neon quemando la pared\nSiete en la nevera y la noche tiene sed\nBolsillos con cash, zapatillas sin estrenar\nCon el bajo en 808 la acera va a temblar\nEsa baby no pide permiso pa' romper\nTrae el ritmo en las venas y ganas de beber\nHielo con ron, humo en el aire fresco\nHoy nadie duerme, este es mi universo\n\n[Pre-Chorus]\nLa calle retumba, el suelo va a ceder\nMueve la cadera, pon el mundo a responder\nSubele al volumen hasta hacer reventar\nQue si entramos a la pista no vamos a parar\n\n[Chorus]\nPrende la calle, dale sin frenar\nQue este dembow duro te va a descontrolar\nPegate a la pared, siente el calor\nPrende la calle, dale con sabor\nPrende la calle, sube la presion\nUn solo retumbo en todo el corazon\nMueve la cintura, rompe el suelo ya\nQue esta noche es nuestra y nadie nos va a parar\n\n[Verse 2]\nSon las tres de la mañana y la nota sigue arriba\nEl DJ suelta el corte y la pista se motiva\nPaso firme en el cemento, la vibra no se cae\nTodo el barrio cantando lo que el bajo trae\nSin mirar la hora, sin pensar en el mañana\nBailando pegadito rozando la ventana\nFuego en los pies, candela en la piel\nEsta noche la historia se escribe otra vez\n\n[Pre-Chorus]\nLa calle retumba, el suelo va a ceder\nMueve la cadera, pon el mundo a responder\nSubele al volumen hasta hacer reventar\nQue si entramos a la pista no vamos a parar\n\n[Chorus]\nPrende la calle, dale sin frenar\nQue este dembow duro te va a descontrolar\nPegate a la pared, siente el calor\nPrende la calle, dale con sabor\nPrende la calle, sube la presion\nUn solo retumbo en todo el corazon\nMueve la cintura, rompe el suelo ya\nQue esta noche es nuestra y nadie nos va a parar\n\n[Bridge]\nY si apagan las luces, prendemos el fuego\nQue la noche es joven y este no es un juego\nSiente la vibra corriendo en las venas\nAqui se baila sin culpa ni penas\n\n[Chorus]\nPrende la calle, dale sin frenar\nQue este dembow duro te va a descontrolar\nPegate a la pared, siente el calor\nPrende la calle, dale con sabor\nPrende la calle, sube la presion\nUn solo retumbo en todo el corazon\nMueve la cintura, rompe el suelo ya\nQue esta noche es nuestra y nadie nos va a parar\n\n[Outro]\nPrende la calle...\nQue el dembow no pare\nQue la noche es de nosotros\nSubele... dale luz, dale fuego\nAsi es que es.",
+  "vocal_gender": "Male",
+  "weirdness": 25,
+  "style_influence": 75,
+  "variety": 50,
+  "exclude_styles": "metal, rock, ballad, classical, country",
+  "yt_title": "Prende La Calle - High Energy Reggaeton Dembow Hit",
+  "yt_description": "Turn up the volume for the ultimate high-energy reggaeton party track.\nPacked with heavy sub-bass, infectious dembow rhythms, and dynamic urban vocals.\nEssential for summer night drives, club playlists, and non-stop party vibes.",
+  "tags": [
+   "spanish reggaeton",
+   "latin urban",
+   "dembow dance",
+   "party music 2026",
+   "summer hit",
+   "energetic reggaeton",
+   "latin pop",
+   "club banger",
+   "reggaeton mix",
+   "dancehall latin",
+   "ai music",
+   "latin dance beat"
+  ],
+  "id": "20261102-051923",
+  "status": "ready",
+  "created": "2026-11-02T05:19:23+00:00",
+  "ref": {
+   "key": "pokito",
+   "title": "Daddy Yankee and Diljit Dosanjh - POKITO  (Official Music Video)",
+   "artist": "Daddy Yankee",
+   "sources": [
+    "YouTube IN #24",
+    "YouTube US #1",
+    "YouTube GB #2",
+    "YouTube MX #7",
+    "YouTube ES #1",
+    "YouTube PK #2",
+    "YouTube DE #10",
+    "YouTube AE #4"
+   ]
+  }
  }
 ]
