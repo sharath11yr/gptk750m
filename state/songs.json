@@ -364,5 +364,49 @@
   "audio_file_id": "CQACAgUAAxkBAAOMauiQYsA1e2hOpnc9nVUXbLYME2YAAjEmAAKfyklXUVfaP9Z9HJc9BA",
   "audio_at": "2026-11-02T13:30:34+00:00",
   "render_at": "2026-11-02T13:56:05+00:00"
+ },
+ {
+  "language": "hi",
+  "language_name": "Hindi",
+  "mood": "happy",
+  "vibe": "Warm acoustic-pop Bollywood love ballad with an anthemic, soulful singalong chorus and intimate city-romance imagery.",
+  "title": "Hoke Tera",
+  "style": "modern Bollywood romantic pop, acoustic guitar, soft electronic beats, warm synth pads, 90 BPM, soulful emotive male vocals, melodic, Hindi",
+  "lyrics": "[Intro]\n(Fingerpicked acoustic guitar melody with warm atmospheric pads and soft finger snaps)\n\n[Verse 1]\nBheegi sadak pe dhal rahi yeh shaam\nBheed mein bhi lab pe tera hi naam\nKandhe pe tere sar jhuka ke chalun\nJaise parinda dhoondhe apna makaam\nAankhon mein leke dhoop thodi si\nChhupke se tu jo hansi...\n\n[Pre-Chorus]\nDuniya ki saari uljhanein chhoot gayi\nDhadkan meri ab tere dhang se chali\nJo tha chhipa iss dil ke kone mein kahin\nWoh baat hothon pe aake thehar gayi\n\n[Chorus]\nHoke tera main toh zinda hua\nTu jo mila har ik lamha naya\nSau manzilein sau raste the magar\nTere bina koi apna na tha\nHaan hoke tera... hoke tera...\nMain toh jeene laga, hoke tera!\n\n[Verse 2]\nTapri ki chai aur thandi hawayein\nKhaali hatheli pe ungli ghumayein\nShehar ke shor mein aisi khamoshi\nKhwaab naye har pal aankhon mein laayein\nAb toh duayein bhi bas yeh kahein\nTujhpe hi aake saansein thamein\n\n[Chorus]\nHoke tera main toh zinda hua\nTu jo mila har ik lamha naya\nSau manzilein sau raste the magar\nTere bina koi apna na tha\nHaan hoke tera... hoke tera...\nMain toh jeene laga, hoke tera!\n\n[Bridge]\nNa maangu taare na yeh aasmaan\nBas tu rahe mera aashiyaan\nHaathon ki har ik lakeer kahe\nTujhpe fida mera jahan...\n\n[Chorus]\nHoke tera main toh zinda hua\nTu jo mila har ik lamha naya\nSau manzilein sau raste the magar\nTere bina koi apna na tha\nHaan hoke tera... hoke tera...\nMain toh jeene laga, hoke tera!\n\n[Outro]\nHan hoke tera...\nBas tera...\nMain toh jeene laga...\nHmm, hoke tera...",
+  "vocal_gender": "Male",
+  "weirdness": 28,
+  "style_influence": 76,
+  "variety": 48,
+  "exclude_styles": "metal, hard rock, rap, techno, scream, heavy distortion",
+  "yt_title": "Hoke Tera - Soulful Hindi Romantic Ballad | Acoustic Pop Love Song",
+  "yt_description": "Immerse yourself in the heartfelt magic of 'Hoke Tera', an uplifting modern Bollywood acoustic ballad celebrating the joy of unconditional love. Featuring warm guitar riffs, atmospheric melodies, and soulful vocals, this song paints the picture of two souls finding peace in a busy city. Perfect for romantic drives, sunset strolls, and acoustic playlists.",
+  "tags": [
+   "hindi romantic song",
+   "bollywood acoustic pop",
+   "soulful hindi ballad",
+   "hoke tera",
+   "modern bollywood love song",
+   "acoustic guitar hindi",
+   "heartfelt romantic music",
+   "ai music",
+   "indian pop ballad",
+   "new hindi love song",
+   "feel good hindi pop",
+   "romantic travel song"
+  ],
+  "id": "20261102-142513",
+  "status": "ready",
+  "created": "2026-11-02T14:25:13+00:00",
+  "ref": {
+   "key": "king tu mil jaaye",
+   "title": "KING: Tu Mil Jaaye | Shah Rukh Khan, Deepika | Sachin-Jigar, Arijit, Ed Sheeran, Madhubanti, Kumaar",
+   "artist": "T-Series",
+   "sources": [
+    "YouTube IN #1",
+    "YouTube GB #4",
+    "YouTube PK #5",
+    "YouTube AE #1"
+   ]
+  }
  }
 ]
