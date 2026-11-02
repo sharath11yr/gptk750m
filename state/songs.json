@@ -205,5 +205,56 @@
   "audio_file_id": "CQACAgUAAxkBAANlaugnPxYcvfMvo6v50qb61e8aMEoAAqweAAKfykFXgDMiPLzRAAEMPQQ",
   "audio_at": "2026-11-02T06:01:58+00:00",
   "render_at": "2026-11-02T06:02:03+00:00"
+ },
+ {
+  "language": "ko",
+  "language_name": "Korean",
+  "mood": "energetic",
+  "vibe": "Sleek, hypnotic late-night K-pop dance-pop with pulsing analog bass, chic mysterious vocals, and an intoxicating dark synth aura.",
+  "title": "Midnight Velvet",
+  "style": "K-pop dance-pop, dark synth-pop, 118 BPM, deep analog bass, crisp percussion, ethereal female vocals, mysterious chic mood, Korean",
+  "lyrics": "[Intro]\n(Whisper)\nShh... turn off the lights\nGeom-eun jangmak dwiyeo\nPulsing sub-bass in the dark\nUnder the midnight veil\n\n[Verse 1]\nYuri byeonge damgin geurimja violet\nChagaun siseon kkeute deuriwojin silhouette\nHan georeum tteollineun jabil deuthan distance\nNaccseon sumgyori gakkawojineun instant\nGeoul sok geurimjaga nal hyanghae uteodo\nI kkeullimeun geojismari anin geol\n\n[Pre-Chorus]\nEodum sopeuro beonjyeoganeun scent\nMeomchul su eopsi seoneul neomo go\nSimjangui pounding, teojil deuthan speed\nNo way out now, I'm ready to fall\n\n[Chorus]\nChikhage heulleonaerin midnight veil\nGunsok kkeuteuro deeper, falling down\nDalkomhan saechangseol neomo chajaga\nDon't break the spell, don't let me go now\nUnder the midnight veil\nGamchwonohun bimilkkaji da gajyeoga\nBicheul ireobeorin i sungando\nSleek and hypnotic, deep in the midnight veil\n\n[Verse 2]\nGipsugi peojineun neoui dark perfume\nHeuntteulleodaneun meorikkal, blurred room\nNal bureuneun neoui eoyeppun whisper\nIseongui kkeuneul kkeonko nege slide in\nHan georeum deo, close to your touch\nDasi doragal su eopseul mankeum deep\n\n[Pre-Chorus]\nEodum sopeuro beonjyeoganeun scent\nMeomchul su eopsi seoneul neomo go\nSimjangui pounding, teojil deuthan speed\nNo way out now, I'm ready to fall\n\n[Chorus]\nChikhage heulleonaerin midnight veil\nGunsok kkeuteuro deeper, falling down\nDalkomhan saechangseol neomo chajaga\nDon't break the spell, don't let me go now\nUnder the midnight veil\nGamchwonohun bimilkkaji da gajyeoga\nBicheul ireobeorin i sungando\nSleek and hypnotic, deep in the midnight veil\n\n[Bridge]\nWiheomhan kkumira haedo nan sanggwananha\nGitteol cheoreom gabiyeowojin neowa na\nBureun kkeojigo neon naege gatin chaero\nLet the synth play, rhythm take control\n\n[Chorus]\nChikhage heulleonaerin midnight veil\nGunsok kkeuteuro deeper, falling down\nDalkomhan saechangseol neomo chajaga\nDon't break the spell, don't let me go now\nUnder the midnight veil\nGamchwonohun bimilkkaji da gajyeoga\nBicheul ireobeorin i sungando\nSleek and hypnotic, deep in the midnight veil\n\n[Outro]\nMidnight veil, midnight veil\nDeo gipeun goseuro\nDon't wake me up\nFading into midnight veil",
+  "vocal_gender": "Female",
+  "weirdness": 25,
+  "style_influence": 75,
+  "variety": 50,
+  "exclude_styles": "heavy metal, acoustic folk, male vocal, trot",
+  "yt_title": "Midnight Velvet - Official Audio Track (K-pop Synth Pop)",
+  "yt_description": "An upgraded, chic dance-pop production driven by deep analog basslines and dark hypnotic synths. Written with vivid imagery and slick K-pop phrasing for late-night playlists.",
+  "tags": [
+   "k-pop",
+   "dance-pop",
+   "synth-pop",
+   "female vocals",
+   "korean pop",
+   "korean dance music",
+   "late night vibes",
+   "chic pop",
+   "hypnotic beat",
+   "electronic pop",
+   "energetic",
+   "ai music"
+  ],
+  "id": "20261102-065708",
+  "status": "ready",
+  "created": "2026-11-02T06:57:08+00:00",
+  "ref": {
+   "key": "addicted",
+   "title": "JISOO - ADDICTED (Official MV)",
+   "artist": "JISOO",
+   "sources": [
+    "YouTube US #15",
+    "YouTube GB #7",
+    "YouTube KR #14",
+    "YouTube BR #20",
+    "YouTube MX #14",
+    "YouTube ID #8",
+    "YouTube PH #10",
+    "YouTube PK #12",
+    "YouTube TR #25",
+    "YouTube FR #10",
+    "YouTube DE #11"
+   ]
+  }
  }
 ]
