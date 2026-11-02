@@ -313,5 +313,51 @@
   "audio_file_id": "CQACAgUAAxkBAAN9auhKAfkTk9WNM7B1eR3oYDj9DZAAAkAfAAKfykFXDvXqt9dRkig9BA",
   "audio_at": "2026-11-02T08:30:16+00:00",
   "render_at": "2026-11-02T08:30:23+00:00"
+ },
+ {
+  "language": "en",
+  "language_name": "English",
+  "mood": "energetic",
+  "vibe": "Dark cinematic pop-rap with sleek Hollywood thriller motifs and confident high-fashion boss energy.",
+  "title": "Director's Cut",
+  "style": "Cinematic dark pop, K-pop style female rap, punchy 808 trap beat, heavy sub-bass, sharp brass stabs, confident sleek female vocals, 125 BPM, energetic English pop",
+  "lyrics": "[Intro]\n(Lights, camera)\nThree, two, one... freeze.\n(Heavy bass drop)\n\n[Verse 1]\nBlack leather boots on the red carpet floor\nCustom matte engine, hear the V12 roar\nFlashing neon lights through the midnight rain\nI don't play the hero, I just run the game\nDesigner shade tint hiding cold young eyes\nNever trust a smile in an Italian tie\nThey want a spectacle, I wrote the script\nChrome velvet trigger at my fingertips\n\n[Pre-Chorus]\nCount down the seconds, watch the spotlight bend\nYou think you know how the story's gonna end\nTicking like a bomb in a velvet box\nWalk into the vault while I turn the locks\n\n[Chorus]\nFlash of lightning, scene cut to black!\nAiming at the top and I don't look back\nTailored silk suit with a blade on the lapel\nRing the final bell, sell high in hell\nAction! Run the tape right back\nWhen the smoke clears—cut to black!\n\n[Verse 2]\nPenthouse suite, ninety-second floor\nPlatinum key card to the private door\nIce in the crystal, vintage pour\nThey talk big money, but I own the floor\nDodge every trap that they set last night\nWalking through the fire in a sleek off-white\nYou came for drama, I came for the crown\nRoll the credits out when I burn it down\n\n[Pre-Chorus]\nCount down the seconds, watch the spotlight bend\nYou think you know how the story's gonna end\nTicking like a bomb in a velvet box\nWalk into the vault while I turn the locks\n\n[Chorus]\nFlash of lightning, scene cut to black!\nAiming at the top and I don't look back\nTailored silk suit with a blade on the lapel\nRing the final bell, sell high in hell\nAction! Run the tape right back\nWhen the smoke clears—cut to black!\n\n[Bridge]\nI ain't standard casting, I own the frame\nI don't make excuses, I change the game\nNo stunt double when the plot gets real\nHands on the crown, foot on the wheel\nCue the heavy brass, turn up the heat\nTake your seat...\n\n[Chorus]\nFlash of lightning, scene cut to black!\nAiming at the top and I don't look back\nTailored silk suit with a blade on the lapel\nRing the final bell, sell high in hell\nAction! Run the tape right back\nWhen the smoke clears—cut to black!\n\n[Outro]\nCut to black...\nThat's a wrap.\n(Fade out)",
+  "vocal_gender": "Female",
+  "weirdness": 30,
+  "style_influence": 75,
+  "variety": 50,
+  "exclude_styles": "country, acoustic folk, heavy metal, ambient",
+  "yt_title": "Director's Cut - Official Music Video (Dark Pop / Trap Anthem)",
+  "yt_description": "Step into a dark cinematic thrill ride with Director's Cut. Fusing high-fashion luxury with explosive trap beats and sharp female rap cadences, this dark pop anthem delivers ultimate boss-lady energy from the first frame to the final cut.",
+  "tags": [
+   "english pop",
+   "dark pop",
+   "cinematic music",
+   "hip hop",
+   "female rap",
+   "energetic pop",
+   "dance pop",
+   "ai music",
+   "badass anthem",
+   "pop trap",
+   "modern pop",
+   "high energy"
+  ],
+  "id": "20261102-092429",
+  "status": "ready",
+  "created": "2026-11-02T09:24:29+00:00",
+  "ref": {
+   "key": "tarantino",
+   "title": "LISA - Tarantino (Official Music Video)",
+   "artist": "LISAOfficialVEVO",
+   "sources": [
+    "YouTube US #6",
+    "YouTube GB #4",
+    "YouTube ID #17",
+    "YouTube PH #15",
+    "YouTube FR #18",
+    "YouTube DE #9"
+   ]
+  }
  }
 ]
