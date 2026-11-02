@@ -236,7 +236,7 @@
    "ai music"
   ],
   "id": "20261102-065708",
-  "status": "ready",
+  "status": "given",
   "created": "2026-11-02T06:57:08+00:00",
   "ref": {
    "key": "addicted",
@@ -255,6 +255,8 @@
     "YouTube FR #10",
     "YouTube DE #11"
    ]
-  }
+  },
+  "given": "2026-11-02T06:57:12+00:00",
+  "message_id": 112
  }
 ]
