@@ -236,7 +236,7 @@
    "ai music"
   ],
   "id": "20261102-065708",
-  "status": "has_audio",
+  "status": "rendering",
   "created": "2026-11-02T06:57:08+00:00",
   "ref": {
    "key": "addicted",
@@ -259,6 +259,7 @@
   "given": "2026-11-02T06:57:12+00:00",
   "message_id": 112,
   "audio_file_id": "CQACAgUAAxkBAANxauhAoQRywNKBr92JPOduRZRMIYMAAiEfAAKfykFXeVXR5wpvqGw9BA",
-  "audio_at": "2026-11-02T07:50:15+00:00"
+  "audio_at": "2026-11-02T07:50:15+00:00",
+  "render_at": "2026-11-02T07:50:52+00:00"
  }
 ]
