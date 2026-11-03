@@ -395,7 +395,7 @@
    "romantic travel song"
   ],
   "id": "20261102-142513",
-  "status": "has_audio",
+  "status": "rendering",
   "created": "2026-11-02T14:25:13+00:00",
   "ref": {
    "key": "king tu mil jaaye",
@@ -411,6 +411,7 @@
   "given": "2026-11-02T14:25:19+00:00",
   "message_id": 151,
   "audio_file_id": "CQACAgUAAxkBAAOYauk8Dxq1GbM6tOAxG6jrIHEIESYAAhcnAAKfyklXkyG6MNhZkdY9BA",
-  "audio_at": "2026-11-03T01:43:01+00:00"
+  "audio_at": "2026-11-03T01:43:01+00:00",
+  "render_at": "2026-11-03T01:43:22+00:00"
  }
 ]
