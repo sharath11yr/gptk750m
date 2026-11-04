@@ -108,11 +108,17 @@ def _nvidia(prompt: str) -> str:
     for model in _list_nvidia(headers):
         try:
             r = requests.post(f"{NVIDIA_URL}/chat/completions", headers=headers, timeout=300,
-                              json={"model": model, "temperature": 0.9, "max_tokens": 6000,
+                              json={"model": model, "temperature": 0.9, "max_tokens": 8000,
                                     "messages": [{"role": "user", "content": prompt}]})
             if r.status_code >= 400:
                 raise RuntimeError(f"{model}: HTTP {r.status_code} {r.text[:200]}")
-            return r.json()["choices"][0]["message"]["content"]
+            msg = r.json()["choices"][0]["message"]
+            # Reasoning models can leave "content" empty and put the text in reasoning_content.
+            text = msg.get("content") or msg.get("reasoning_content") or ""
+            if "{" not in text:
+                raise RuntimeError(f"{model}: no JSON in the reply")
+            _parse(text)  # bad JSON: try the next model
+            return text
         except Exception as exc:
             log.warning("NVIDIA failed: %s", exc)
             last = exc
@@ -120,11 +126,16 @@ def _nvidia(prompt: str) -> str:
 
 
 def _parse(text: str) -> dict:
-    text = re.sub(r"<think>.*?</think>", "", text, flags=re.S)
+    text = re.sub(r"<think>.*?</think>", "", text or "", flags=re.S)
+    text = re.sub(r"```(?:json)?", "", text)
     start, end = text.find("{"), text.rfind("}")
     if start < 0 or end < 0:
         raise ValueError("no JSON in reply")
-    return json.loads(text[start:end + 1])
+    body = text[start:end + 1]
+    try:
+        return json.loads(body)
+    except json.JSONDecodeError:
+        return json.loads(re.sub(r",\s*([}\]])", r"\1", body), strict=False)
 
 
 def ask_json(prompt: str) -> dict:
@@ -134,7 +145,10 @@ def ask_json(prompt: str) -> dict:
         if wait:
             log.info("All AI models busy; waiting %ds and trying again", wait)
             time.sleep(wait)
-        for name, fn in (("gemini", _gemini), ("nvidia", _nvidia)):
+        # NVIDIA first (set LLM_ORDER=gemini,nvidia to change)
+        order = (os.getenv("LLM_ORDER") or "nvidia,gemini").split(",")
+        providers = {"gemini": _gemini, "nvidia": _nvidia}
+        for name, fn in ((n.strip(), providers[n.strip()]) for n in order if n.strip() in providers):
             if not os.getenv(f"{name.upper()}_API_KEY"):
                 continue
             try:
