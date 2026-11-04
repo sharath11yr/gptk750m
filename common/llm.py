@@ -63,8 +63,9 @@ def _gemini(prompt: str) -> str:
     last = None
     for model in _list_gemini():
         try:
+            _check_deadline()
             r = requests.post(f"{GEMINI_URL}/models/{model}:generateContent",
-                              params={"key": os.environ["GEMINI_API_KEY"]}, timeout=180,
+                              params={"key": os.environ["GEMINI_API_KEY"]}, timeout=(15, 150),
                               json={"contents": [{"parts": [{"text": prompt}]}],
                                     "generationConfig": {"temperature": 0.9,
                                                          "responseMimeType": "application/json"}})
@@ -107,9 +108,17 @@ def _nvidia(prompt: str) -> str:
     last = None
     for model in _list_nvidia(headers):
         try:
-            r = requests.post(f"{NVIDIA_URL}/chat/completions", headers=headers, timeout=300,
-                              json={"model": model, "temperature": 0.9, "max_tokens": 8000,
-                                    "messages": [{"role": "user", "content": prompt}]})
+            _check_deadline()
+            body = {"model": model, "temperature": 0.9, "max_tokens": 8000,
+                    "messages": [{"role": "user", "content": prompt}],
+                    # Skip the long "thinking" step where the model supports it (much faster).
+                    "chat_template_kwargs": {"thinking": False, "enable_thinking": False}}
+            r = requests.post(f"{NVIDIA_URL}/chat/completions", headers=headers, json=body,
+                              timeout=(15, 150))
+            if r.status_code == 400:  # model doesn't accept the thinking switch
+                body.pop("chat_template_kwargs")
+                r = requests.post(f"{NVIDIA_URL}/chat/completions", headers=headers, json=body,
+                                  timeout=(15, 150))
             if r.status_code >= 400:
                 raise RuntimeError(f"{model}: HTTP {r.status_code} {r.text[:200]}")
             msg = r.json()["choices"][0]["message"]
@@ -123,6 +132,15 @@ def _nvidia(prompt: str) -> str:
             log.warning("NVIDIA failed: %s", exc)
             last = exc
     raise RuntimeError(f"All NVIDIA models failed: {last}")
+
+
+TOTAL_SECONDS = int(os.getenv("LLM_TOTAL_SECONDS", "480"))
+_deadline = 0.0
+
+
+def _check_deadline():
+    if time.time() > _deadline:
+        raise TimeoutError(f"no AI answer within {TOTAL_SECONDS // 60} minutes")
 
 
 def _parse(text: str) -> dict:
@@ -140,9 +158,13 @@ def _parse(text: str) -> dict:
 
 def ask_json(prompt: str) -> dict:
     """Ask for a JSON object. Gemini first, then NVIDIA; if both are busy, wait and try again."""
+    global _deadline
+    _deadline = time.time() + TOTAL_SECONDS
     errors = []
-    for wait in (0, 30, 90):
+    for wait in (0, 30, 60):
         if wait:
+            if time.time() + wait > _deadline:
+                break
             log.info("All AI models busy; waiting %ds and trying again", wait)
             time.sleep(wait)
         # NVIDIA first (set LLM_ORDER=gemini,nvidia to change)
@@ -152,7 +174,10 @@ def ask_json(prompt: str) -> dict:
             if not os.getenv(f"{name.upper()}_API_KEY"):
                 continue
             try:
-                return _parse(fn(prompt))
+                started = time.time()
+                result = _parse(fn(prompt))
+                log.info("%s answered in %.0fs", name, time.time() - started)
+                return result
             except Exception as exc:
                 errors.append(f"{name}: {str(exc)[:300]}")
     raise RuntimeError("LLM failed: " + " | ".join(errors[-2:]))
