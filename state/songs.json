@@ -737,6 +737,7 @@
   },
   "audio_file_id": "CQACAgUAAxkBAAOzauwtUrLKgl7L5hJMhlSUf5gOAAGwAAIIKwACNdpgV5j57mY1mIP-PQQ",
   "audio_at": "2026-11-05T07:16:36+00:00",
-  "status": "has_audio"
+  "status": "rendering",
+  "render_at": "2026-11-05T07:16:45+00:00"
  }
 ]
